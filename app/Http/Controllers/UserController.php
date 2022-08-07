@@ -110,6 +110,8 @@ class UserController extends Controller
     public function edit($id)
     {
         $model = User::find($id);
+        // $model->email = $enc;
+
         return view('page.data_tamu.user.edit', compact('model'));
     }
 
@@ -158,6 +160,17 @@ class UserController extends Controller
             }
             else{
                 $enc=$enc.$hasil[$i];
+            }
+        }
+        $dec = NULL;
+        for($i=0;$i<strlen($hasil=$request->email);$i++)
+        {
+            $m=ord($enc[$i]);
+            if($m<=119){
+                $dec=$dec.(decRSA($m));
+            }
+            else{
+                $dec=$dec.$enc[$i];
             }
         }
         

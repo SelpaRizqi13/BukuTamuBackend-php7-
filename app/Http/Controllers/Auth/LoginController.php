@@ -16,6 +16,7 @@ class LoginController extends Controller
      */
     public function index()
     {
+
         return view('page.auth.login.index');
     }
 
@@ -98,6 +99,7 @@ class LoginController extends Controller
         $data = [
             'email'     => $enc,
             // input('email'),
+            // 'email'  => $request->input('email'),
             'password'  => $request->input('password'),
         ];
     

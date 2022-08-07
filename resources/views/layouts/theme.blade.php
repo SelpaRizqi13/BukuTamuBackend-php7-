@@ -1,17 +1,41 @@
+
 <html>
-
-<head>
-    <meta name="keywords" content="BukuTamu, DISKOMINFO">
-    <meta name="author" content="Selpa Rizqi">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>BUKU TAMU | Admin</title>
-    @include('includes.style')
-</head>
-
-<body class="hold-transition sidebar-mini layout-fixed">
+    
+    <head>
+        <meta name="keywords" content="BukuTamu, DISKOMINFO">
+        <meta name="author" content="Selpa Rizqi">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+        <title>BUKU TAMU | Admin</title>
+        @include('includes.style')
+    </head>
+    
+    <body class="hold-transition sidebar-mini layout-fixed">
     <div class="wrapper">
-        @include('includes.navbar')
+        @can('user')
+        <nav class=" navbar navbar-expand navbar-white navbar-light">
+            
+                <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     {{ auth()->user()->name }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                      <form action="/logout" method="POST">
+                        @csrf
+                          <button type="submit" class="dropdown-item"><i class="fas fa-sign-out"></i> Logout</button>
+                      </form>
+                    </div>
+                  </li>
+                </ul>
+            
+        </nav>
+        <div class="text-center ">
+            <h1 style="margin-top: 250px; font-family:Castellar;"> Maaf halaman ini hanya untuk Admin</h1>
+        </div>
+        @endcan
+            @can('admin')
+            @include('includes.navbar')
         @include('includes.sidebar')
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
@@ -19,6 +43,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
+                           
                             <h1>
                                 @yield('title')
                             </h1>
@@ -68,13 +93,13 @@
                 <div class="modal fade" id="myModalDownload">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
-
+                            
                             <!-- Modal Header -->
                             <div class="modal-header">
                                 <h1 class="modal-title">@stack('title_modal')</h1>
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                             </div>
-
+                            
                             <!-- Modal body -->
                             <div class="modal-body">
                                 <div class="input-group mb-3">
@@ -97,6 +122,7 @@
 
 
             </section>
+            @endcan
         </div>
         @include('includes.script')
         @stack('script')

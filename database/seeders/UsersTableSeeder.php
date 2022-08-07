@@ -22,58 +22,17 @@ class UsersTableSeeder extends Seeder
         [
             [
                 'name' => 'Admin',
-                'email' => 'admin@gmail.com',
+                'email' => '626037112871065237621121279928337',
                 'roles' => 'admin',
-                'password' => 'password',
+                'password' => '$2y$10$b6SKHqec4a7Sp3Lrw.kGguxMwW6lQQ.0EbnzHpctqKkavz/Gf1feC',
             ],
             [
                 'name' => 'SAdmin',
-                'email' => 'sadmin@gmail.com',
+                'email' => '8994626037112871065237621121279928337',
                 'roles' => 'super admin',
-                'password' => 'password',
+                'password' => '$2y$10$R/nJ.x9kqt68LoaP9YiY4eavLSjllaHccMRI2eiFO3AyzdDwJcWjW',
             ],
-            [
-            'name' => 'Selpa',
-            'email' => 'sela@gmail.com',
-            'roles' => 'user',
-            'password' => 'password',
-        ],
-        [
-            'name' => 'Rizqi',
-            'email' => 'sel@gmail.com',
-            'roles' => 'user',
-            'password' => 'password',
-        ],
-        [
-            'name' => 'senja',
-            'email' => 'se@gmail.com',
-            'roles' => 'user',
-            'password' => 'password',
-        ],
-        [
-            'name' => 'arsila',
-            'email' => 'elpa@gmail.com',
-            'roles' => 'user',
-            'password' => 'password',
-        ],
-        [
-            'name' => 'zahra',
-            'email' => 'lpa@gmail.com',
-            'roles' => 'user',
-            'password' => 'password',
-        ],
-        [
-            'name' => 'farkhana',
-            'email' => 's@gmail.com',
-            'roles' => 'user',
-            'password' => 'password',
-        ],
-        [
-            'name' => 'arsi',
-            'email' => 'e@gmail.com',
-            'roles' => 'user',
-            'password' => 'password',
-        ]
+           
     ];
         foreach ($users as $user) {
             User::create($user);

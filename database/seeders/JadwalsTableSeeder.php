@@ -22,7 +22,7 @@ class JadwalsTableSeeder extends Seeder
             [
                 'nama_kegiatan' => 'Seminar Cyber Security & Risk Management',
                 'tanggal_kegiatan' => '2022-05-25',
-                'image' => 'assets/upload/ja4AWKrW4gi7ipq5WQLwbC9DxinrLsicTTzuk6e1.jpg',
+                'image' => 'assets/upload/Jy3eg2mD13NGwkiqtVucs6NFdOu9KETrLprkm1yh.jpg',
                 'deskripsi' => 'Dalam rangka meningkatkan Awareness masyarakat terhadap Keamanan Data Digital. Indonesia Network Security Association (idNSA) bekerja sama dengan Cloudtech, Amiya dan NRI-Secure berinisiatif mengadakan sebuah seminar dengan tema “CYBER SECURITY AND RISK MANAGEMENT – MEASURES FOR PROTECTING YOUR DIGITAL ASSETS”',
             ],
         ];

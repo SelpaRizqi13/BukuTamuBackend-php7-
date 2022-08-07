@@ -61,7 +61,7 @@
                         <button type="submit" class="btn btn-primary btn-block">Login</button>
                     </div>
                 </form>
-                <small>Not Registered? <a href="/register">Register Now!</a></small>
+                {{-- <small>Not Registered? <a href="/register">Register Now!</a></small> --}}
             </div>
             <!-- /.login-card-body -->
         </div>

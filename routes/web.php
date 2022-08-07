@@ -28,6 +28,7 @@ Route::middleware(['guest'])->group(function () {
 
 
 Route::middleware(['auth'])->group(function () {
+    // Route::middleware(['block'])->group(function () {
 
     Route::resource('user', UserController::class);    
     Route::resource('buku_tamu', BukuTamuController::class);

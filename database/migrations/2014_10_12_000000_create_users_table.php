@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('roles')->default('user');
-            $table->string('image')->default('http://192.168.43.147:8000/storage/profiles/1658680483.png');
+            $table->string('image')->nullable();
             $table->string('password');
             $table->timestamps();
         });

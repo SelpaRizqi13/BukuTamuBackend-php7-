@@ -1,13 +1,15 @@
+@can('admin')
+
 @extends('layouts.theme')
 
 
 @section('title')
-    Selamat Datang
+Selamat Datang
 @endsection
 
 @section('content')
-    <!-- tampilan card -->
-    <div class="row">
+<!-- tampilan card -->
+<div class="row">
         @can('roles')
         <div class="col-lg-3 col-6">
             <!-- small card -->
@@ -108,4 +110,7 @@
         <!-- ./col -->
     </div>
     <!-- /.row -->
-@endsection
+    @endsection
+
+    
+    @endcan
