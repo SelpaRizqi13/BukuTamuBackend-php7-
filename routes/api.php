@@ -21,10 +21,11 @@ Route::post('/login', [AuthController::class, 'login']);
 // Jadwal
 
 
-Route::group(['middleware' => ['auth:sanctum']], function() {
+Route::group(['middleware' => ['auth:sanctum'], 'namespace'=>'App\Http\Controllers\API'], function() {
 
 Route::get('user', [AuthController::class, 'user']);
 Route::put('user', [AuthController::class, 'update']);
+Route::post('user', [AuthController::class, 'update']);
 Route::post('logout', [AuthController::class, 'logout']);
 
 Route::get('userById/{id}', [GetDataController::class, 'userById'])->name('userById');

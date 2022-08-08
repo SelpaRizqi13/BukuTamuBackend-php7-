@@ -102,15 +102,15 @@ class GetDataController extends Controller
             return ResponseFormatter::error(null, 'Data user gagal ditambahkan', 404);
     }
 
-    public function updateUser(Request $request, $id)
-    {
-        $model = User::find($id);
-        $model->update($request->all());
-        if ($model)
-            return ResponseFormatter::success($model, 'Data user berhasil diupdate');
-        else
-            return ResponseFormatter::error(null, 'Data user gagal diupdate', 404);
-    }
+    // public function updateUser(Request $request, $id)
+    // {
+    //     $model = User::find($id);
+    //     $model->update($request->all());
+    //     if ($model)
+    //         return ResponseFormatter::success($model, 'Data user berhasil diupdate');
+    //     else
+    //         return ResponseFormatter::error(null, 'Data user gagal diupdate', 404);
+    // }
 
     public function deleteUser($id)
     {
