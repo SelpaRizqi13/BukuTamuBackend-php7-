@@ -156,7 +156,18 @@ class BukuTamuController extends Controller
     {
         //dd(["Tanggal Awal: ".$awal, "Tanggal Akhir: ".$akhir]);
         //$datas = user::all();
-
+        $datas = \DB::table('buku_tamus')
+        ->select([
+            \DB::raw('count(*) as jumlah'),
+            \DB::raw('DATE(tanggal_kunjungan) as tanggal'),
+            ])
+            ->groupBy('tanggal')
+            ->whereBetween('tanggal_kunjungan',[$awal, $akhir])
+            ->orderBy('tanggal')
+            ->get()
+            ->toArray()
+            ;
+            // dd($datas);
         $buku_tamus = BukuTamu::whereBetween('tanggal_kunjungan', [$awal, $akhir])->get();
         view()->share('buku_tamus', $buku_tamus);
     
@@ -165,18 +176,31 @@ class BukuTamuController extends Controller
         $data = file_get_contents($path);
         $pic ='data:image/' .$type. ';base64,' .base64_encode($data);
 
-        $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadview('page.data_tamu.buku_tamu.tamu_exportpdf', compact('pic')); 
+        $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadview('page.data_tamu.buku_tamu.tamu_exportpdf', compact('pic','datas', 'awal', 'akhir')); 
         return $pdf->setPaper('a4', 'landscape')->download('datatamu.pdf');
     }
     public function print_tamu($tglawal, $tglakhir)
     {
+        $datas = \DB::table('buku_tamus')
+        ->select([
+            \DB::raw('count(*) as jumlah'),
+            \DB::raw('DATE(tanggal_kunjungan) as tanggal'),
+            ])
+            ->groupBy('tanggal')
+            ->whereBetween('tanggal_kunjungan', [$tglawal, $tglakhir])
+            // ->whereRaw('DATE(tanggal_kunjungan) >= ?',[ date('Y-m-d',strtotime($tglakhir)) ])
+            ->orderBy('tanggal')
+            ->get()
+            ->toArray()
+            ;
+            // dd($datas);
         // dd(["Tanggal awal : "."$tglawal","Tanggal Akhir: "."$tglakhir"]);
         $buku_tamus = BukuTamu::whereBetween('tanggal_kunjungan', [$tglawal, $tglakhir])->get();
         $path = base_path('public/diskominfo.png');
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
         $pic ='data:image/' .$type. ';base64,' .base64_encode($data);
-        return view('page.data_tamu.buku_tamu.tamu_exportpdf', compact('buku_tamus', 'pic'));
+        return view('page.data_tamu.buku_tamu._print', compact('buku_tamus', 'pic','datas', 'tglawal', 'tglakhir'));
     }
     public function getpegawai(Request $request)
     {

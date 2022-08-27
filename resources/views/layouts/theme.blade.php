@@ -14,7 +14,6 @@
     <div class="wrapper">
         @can('user')
         <nav class=" navbar navbar-expand navbar-white navbar-light">
-            
                 <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -28,15 +27,14 @@
                     </div>
                   </li>
                 </ul>
-            
         </nav>
         <div class="text-center ">
             <h1 style="margin-top: 250px; font-family:Castellar;"> Maaf halaman ini hanya untuk Admin</h1>
         </div>
         @endcan
-            @can('admin')
+        @can('admin')
             @include('includes.navbar')
-        @include('includes.sidebar')
+            @include('includes.sidebar')
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <section class="content-header">

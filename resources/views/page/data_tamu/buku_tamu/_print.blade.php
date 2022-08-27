@@ -82,7 +82,8 @@
         </table>
     
     <h1 style="text-align: center">Laporan Data Tamu</h1>
-    <p style="text-align: center">Periode Tanggal {{ date('d F Y', strtotime($awal)) }} s/d {{ date('d F Y', strtotime($akhir)) }}</p>
+    <p style="text-align: center">Periode Tanggal {{ date('d F Y', strtotime($tglawal)) }} s/d {{ date('d F Y', strtotime($tglakhir)) }}</p>
+
     <table id="customers">
         <thead>
             <th style="text-align: center">No</th>
@@ -127,7 +128,7 @@
             </tbody>
         @endforeach
     </table>    
-    
+
     <script type="text/javascript">
         window.print();
     </script>

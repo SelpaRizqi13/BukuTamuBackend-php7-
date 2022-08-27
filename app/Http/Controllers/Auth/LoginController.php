@@ -38,19 +38,6 @@ class LoginController extends Controller
      */
     public function store(Request $request)
     {
-        // $credentials = $request->validate([
-        //     'email' => ['required', 'email'],
-        //     'password' => ['required'],
-        // ]);
-
-        // if (Auth::attempt($credentials)) {
-        //     $request->session()->regenerate();
-
-        //     return redirect()->intended('dashboard');
-        // }
-
-        // return back()->with('logineror', 'Login gagal, coba perhatikan kembali email dan passwordnya');
-        
         $rules = [
             'email'      => 'required|email:dns',
             'password'      => 'required|min:8'
@@ -64,11 +51,9 @@ class LoginController extends Controller
         ];
     
         $validator = Validator::make($request->all(), $rules, $messages);
-    
         if($validator->fails()){
             return redirect()->back()->withErrors($validator)->withInput($request->all);
         }
-    
         $remember = $request->has('remember') ? true : false;
         function encRSA($M){
             $data[0]=1;
@@ -95,10 +80,8 @@ class LoginController extends Controller
                 $enc=$enc.$hasil[$i];
             }
         }
-
         $data = [
             'email'     => $enc,
-            // input('email'),
             // 'email'  => $request->input('email'),
             'password'  => $request->input('password'),
         ];

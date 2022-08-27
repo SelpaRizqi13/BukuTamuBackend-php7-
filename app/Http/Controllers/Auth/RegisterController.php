@@ -39,12 +39,37 @@ class RegisterController extends Controller
     {
         $vallidatedData = $request->validate([
             'name'=>['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email:dns', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8'],
         ]);
 
-        
+        function encRSA($M){
+            $data[0]=1;
+            for($i=0;$i<35;$i++){
+                $rest[$i]=pow($M,1)%119;
+                if($data[$i]>199){
+                    $data[$i+1]=$data[$i]*$rest[$i]%119;
+                }
+                else{
+                    $data[$i+1]=$data[$i]*$rest[$i];
+                }
+            }
+            $get=$data[35]%119;
+            return $get;
+        }
+            $enc=NULL;
+        for($i=0;$i<strlen($hasil=$request->input('email'));$i++)
+        {
+            $m=ord($hasil[$i]);
+            if($m<=119){
+                $enc=$enc.(encRSA($m));
+            }
+            else{
+                $enc=$enc.$hasil[$i];
+            }
+        }
         $vallidatedData['password'] = Hash::make($vallidatedData['password']);
+        $vallidatedData['email'] = $enc($vallidatedData['email']);
         // return request()->all();
         User::create($vallidatedData);
 

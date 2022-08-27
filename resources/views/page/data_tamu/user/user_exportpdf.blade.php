@@ -8,9 +8,19 @@
             border-collapse: collapse;
             width: 100%;
         }
-
+        #customer {
+            font-family: Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            
+        }
         #customers td,
         #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #customer td,
+        #customer th {
             border: 1px solid #ddd;
             padding: 8px;
         }
@@ -31,6 +41,13 @@
             color: white;
         }
 
+        #customer th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #04AA6D;
+            color: white;
+        }
         .rangkasurat {
             width: 800px;
             margin: 0 auto;
@@ -53,6 +70,8 @@
 
 <body>
     <table id="kopsurat" width="100%">
+        
+        
         <tr>
             <td><img src="<?php echo $pic ?>" width="100px"></td>
             <td class="tengah">
@@ -63,11 +82,13 @@
             </td>
         </tr>
     </table>
-    <h1 style="text-align: center">Data Pengguna Aplikasi</h1>
+    <h1 class="tengah">Laporan Data Pengguna Aplikasi</h1>
+    <p style="text-align: center">Periode Tanggal {{ date('d F Y', strtotime($awal)) }} s/d {{ date('d F Y', strtotime($akhir)) }}</p>
 
-    <table id="customers">
+    <table id="customers" >
+        
         <thead>
-            <th style="text-align: center">No</th>
+            <th style="text-align: center" width="10px">No</th>
             <th>Username</th>
             <th>Email</th>
         </thead>
@@ -78,7 +99,21 @@
                 <td>{{ $value->email }}</td>
             </tbody>
         @endforeach
+
     </table>
+    <p>Rekap Jumlah Data Pengguna yang Daftar Aplikasi pertanggal</p>
+    <table id="customer">
+        <thead>
+            <th width="100px">Tanggal</th>
+            <th width="200px">Jumlah yang daftar</th>
+        </thead>
+        @foreach ($datas as $key => $value)
+            <tbody>
+                <td>{{ $value->tanggal }}</td>
+                <td>{{ $value->jumlah }}</td>
+            </tbody>
+        @endforeach
+    </table>    
 
     <script type="text/javascript">
         window.print();

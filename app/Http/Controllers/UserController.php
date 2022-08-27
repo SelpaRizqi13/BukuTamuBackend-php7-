@@ -48,11 +48,9 @@ class UserController extends Controller
 
 
     
-
+     
     public function store(UserRequest $request)
     {
-
-        
         function encRSA($M){
             $data[0]=1;
             for($i=0;$i<35;$i++){
@@ -83,7 +81,6 @@ class UserController extends Controller
         $model->email = $enc;
         $model->roles = $request->role;
         $model->password = bcrypt($request->password);
-        
         $model->save();
 
         return redirect('user')->with('success', 'Data Berhasil di Tambah');
@@ -203,20 +200,51 @@ class UserController extends Controller
         //dd(["Tanggal Awal: ".$awal, "Tanggal Akhir: ".$akhir]);
         //$datas = user::all();
 
-        $users = user::whereBetween('created_at', [$awal, $akhir])->get();
+        $datas = \DB::table('users')
+        ->select([
+            \DB::raw('count(*) as jumlah'),
+            \DB::raw('DATE(created_at) as tanggal'),
+            ])
+            ->groupBy('tanggal')
+            ->whereBetween('created_at', [$awal, $akhir])
+            ->orderBy('tanggal')
+            ->get()
+            ->toArray()
+            ;
+            
+            
+            $users = user::whereBetween('created_at', [$awal, $akhir])->get();
+        // $users = User::selectRaw('id, name, email, DATE(created_at) as created_date')
+        //         ->withCount('created_at', [$awal, $akhir])
+        //         ->orderBy('created_date', 'desc')
+        //         ->orderBy('count', 'desc')
+        //         ->get()
+        //         ->grupBy('created_date')->dd();
         view()->share('users', $users);
-
+        
         $path = base_path('public/diskominfo.png');
         $type = pathinfo($path, PATHINFO_EXTENSION);
         $data = file_get_contents($path);
         $pic ='data:image/' .$type. ';base64,' .base64_encode($data);
 
-        $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadview('page.data_tamu.user.user_exportpdf', compact('pic'));
+        $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadview('page.data_tamu.user.user_exportpdf', compact('pic','datas', 'awal', 'akhir'));
         return $pdf->setPaper('a4')->download('datapengguna.pdf');
     }
+
     public function print_user($tglawal, $tglakhir)
     {
         // dd(["Tanggal awal : "."$tglawal","Tanggal Akhir: "."$tglakhir"]);
+        $datas = \DB::table('users')
+        ->select([
+            \DB::raw('count(*) as jumlah'),
+            \DB::raw('DATE(created_at) as tanggal'),
+            ])
+            ->groupBy('tanggal')
+            ->whereBetween('created_at', [$tglawal, $tglakhir])
+            ->orderBy('tanggal', 'desc')
+            ->get()
+            ->toArray()
+            ;
         $users = user::whereBetween('created_at', [$tglawal, $tglakhir])->get();
 
         $path = base_path('public/diskominfo.png');
@@ -224,6 +252,6 @@ class UserController extends Controller
         $data = file_get_contents($path);
         $pic ='data:image/' .$type. ';base64,' .base64_encode($data);
 
-        return view('page.data_tamu.user.user_exportpdf', compact('users', 'pic'));
+        return view('page.data_tamu.user._print', compact('users', 'pic', 'datas', 'tglawal', 'tglakhir'));
     }
 }
